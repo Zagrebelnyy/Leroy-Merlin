@@ -13,7 +13,7 @@ class GameServiceImpl : GameService {
     override fun run(
         pingPongTable: PingPongTableServiceImpl, points: Int,
         playerOne: PlayerService, playerTwo: PlayerService
-    ) {
+    ): String {
         var score1 = 0 //Счёт первого игрока
         var score2 = 0 //Счёт второго игрока
 
@@ -22,7 +22,7 @@ class GameServiceImpl : GameService {
 
         while (true) {
             currentTablePoint = currentPlayer.hit()
-            System.out.println(currentTablePoint.toString())
+            println(currentTablePoint.toString())
             if (currentPlayer.equals(playerOne)) {
                 println("Производится удар игроком под номером один")
                 if (pingPongTable.getPlayerTwoTablePointsForShouting()!!.contains(currentTablePoint)) {
@@ -44,14 +44,15 @@ class GameServiceImpl : GameService {
                     currentPlayer = playerOne
                 }
             }
-            if (score1 == points) {
-                println("Игрок под номером один победил")
+            if (score1 == points || score2 == points) {
+                if (score1 == points)
+                    println("Игрок под номером один победил")
+                else
+                    println("Игрок под номером два победил")
+
                 println("Текущий счёт $score1 : $score2")
-                break
-            } else if (score2 == points) {
-                println("Игрок под номером два победил")
-                println("Текущий счёт $score1 : $score2")
-                break
+
+                return "$score1:$score2"
             }
         }
     }

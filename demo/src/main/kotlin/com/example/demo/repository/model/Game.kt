@@ -16,11 +16,13 @@ class Game(
     @JoinColumn(name = "second_player_id", referencedColumnName = "id")
     var playerTwo: Player,
 
-    var date: String
+    var date: String,
+
+    var score: String
 ){
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long = 0
 
     constructor() : this(0, Player(""), Player(""),
-        SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(Date()))
+        SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(Date()), "0:0")
 }

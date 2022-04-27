@@ -1,11 +1,10 @@
-package com.example.demo.controllers
+package com.example.demo.web.controllers
 
 import com.example.demo.domain.Game
 import com.example.demo.domain.Player
-import com.example.demo.repos.GameRepo
-import com.example.demo.repos.PlayerRepo
+import com.example.demo.repository.GameRepository
+import com.example.demo.repository.PlayerRepository
 import com.example.demo.service.GameService
-import com.example.demo.service.PlayerService
 import com.example.demo.service.impl.PingPongTableServiceImpl
 import com.example.demo.service.impl.PlayerServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
@@ -17,10 +16,10 @@ import java.util.*
 @RequestMapping("game")
 class GameController {
     @Autowired
-    lateinit var gameRepo: GameRepo
+    lateinit var gameRepository: GameRepository
 
     @Autowired
-    lateinit var playerRepo: PlayerRepo
+    lateinit var playerRepository: PlayerRepository
 
     @Autowired
     lateinit var gameService: GameService
@@ -30,12 +29,12 @@ class GameController {
 
 
     // Запуск игры через rest-api, задавая имена игроков и максимальное количество очков
-    // http://localhost:8080/game/11/players/first/Alex/second/Osip
-    @GetMapping("/{points}/players/first/{name1}/second/{name2}")
+    // http://localhost:8080/play
+    @PostMapping("/play")
     @ResponseBody
-    fun create(@PathVariable points: Int, @PathVariable name1: String, @PathVariable name2: String): Game {
-        val playerOne = Player(name1)
-        val playerTwo = Player(name2)
+    fun create(@RequestBody newGame: Map<String, String>): Game {
+        val playerOne = Player(newGame.get("nameOne")!!)
+        val playerTwo = Player(newGame.get("nameTwo")!!)
 
         val time = SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(Date())
 
@@ -50,13 +49,13 @@ class GameController {
             pingPongTableService.getPlayerTwoTablePointsForShouting()
         )
 
-        gameService.run(pingPongTableService, points, playerServiceOne, playerServiceTwo)
+        var score: String = gameService.run(pingPongTableService, newGame.get("points")!!.toInt(), playerServiceOne, playerServiceTwo)
 
-        val game = Game(points, playerOne, playerTwo, time)
+        val game = Game(newGame.get("points")!!.toInt(), playerOne, playerTwo, time, score)
 
-        playerRepo.save(playerOne)
-        playerRepo.save(playerTwo)
-        gameRepo.save(game)
+        playerRepository.save(playerOne)
+        playerRepository.save(playerTwo)
+        gameRepository.save(game)
 
         return game
     }
@@ -67,7 +66,7 @@ class GameController {
     @GetMapping("/{id}")
     @ResponseBody
     fun show(@PathVariable id: Long): Any {
-        var game = gameRepo.findById(id)
+        var game = gameRepository.findById(id)
         return game
     }
 
@@ -80,9 +79,9 @@ class GameController {
         lateinit var game: List<Game>
         val id = player.toLongOrNull()
         if (id !== null)
-            game = gameRepo.findAllByPlayerId(id)
+            game = gameRepository.findAllByPlayerId(id)
         else
-            game = gameRepo.findAllByPlayerName(player)
+            game = gameRepository.findAllByPlayerName(player)
 
         return game
     }

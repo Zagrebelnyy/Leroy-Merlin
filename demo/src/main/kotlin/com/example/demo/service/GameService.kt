@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service
 
 
 interface GameService {
-    fun run(pingPongTable: PingPongTableServiceImpl, points: Int, playerOne: PlayerService, playerTwo: PlayerService)
+    fun run(pingPongTable: PingPongTableServiceImpl, points: Int, playerOne: PlayerService, playerTwo: PlayerService): String
 }

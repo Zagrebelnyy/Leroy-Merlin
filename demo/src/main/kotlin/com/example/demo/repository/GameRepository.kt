@@ -1,14 +1,10 @@
-package com.example.demo.repos
+package com.example.demo.repository
 
 import com.example.demo.domain.Game
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 
-interface GameRepo : CrudRepository<Game, Long> {
-//    fun findByPlayerId(id: Long): Game
-
-//    fun findAllByPlayerName(name: String): List<Game>
-
+interface GameRepository : CrudRepository<Game, Long> {
     @Query("SELECT * FROM game WHERE first_player_id = :id OR second_player_id = :id", nativeQuery = true)
     fun findAllByPlayerId(id: Long): List<Game>
 
