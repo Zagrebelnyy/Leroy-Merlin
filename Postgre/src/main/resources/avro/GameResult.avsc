@@ -1,0 +1,29 @@
+{
+  "doc": "Game result",
+  "namespace": "ru.leroymerlin.billing",
+  "type": "record",
+  "name": "GameResult",
+  "fields": [
+    {
+      "doc": "Winner player name",
+      "name": "firstPlayer",
+      "type": "string"
+    },
+    {
+      "doc": "Game datetime in UTC",
+      "name": "gameTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-micros"
+      }
+    },
+    {
+      "doc": "Final score",
+      "name": "score",
+      "type": {
+        "type": "string",
+        "java-class": "java.math.BigDecimal"
+      }
+    }
+  ]
+}

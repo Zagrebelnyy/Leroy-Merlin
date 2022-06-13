@@ -1,0 +1,67 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 1
+      author: alex
+      changes:
+        - createTable:
+            tableName: player
+            remarks: Игроки
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  remarks: Имя игрока
+                  constraints:
+                    unique: true
+                    nullable: false
+
+
+        - createTable:
+            tableName: game
+            remarks: Игры
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: player_one
+                  type: bigint
+                  remarks: Имя певрого игрока
+                  constraints:
+                    nullable: false
+              - column:
+                  name: player_two
+                  type: bigint
+                  remarks: Имя второго игрока
+                  constraints:
+                    nullable: false
+              - column:
+                  name: points
+                  type: int
+                  remarks: Число очков
+                  constraints:
+                    nullable: false
+              - column:
+                  name: score
+                  type: varchar(255)
+                  remarks: Счет
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date
+                  type: varchar(255)
+                  remarks: Время начала игры
+                  constraints:
+                    nullable: false

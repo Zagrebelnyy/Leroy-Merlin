@@ -1,0 +1,46 @@
+{
+  "doc": "New game start message",
+  "namespace": "ru.leroymerlin.billing",
+  "type": "record",
+  "name": "NewGameMessage",
+  "fields": [
+    {
+      "doc": "Player one",
+      "name": "firstPlayer",
+      "type": {
+        "doc": "Player object",
+        "namespace": "ru.leroymerlin.billing",
+        "type": "record",
+        "name": "Player",
+        "fields": [
+          {
+            "doc": "Name",
+            "name": "name",
+            "type": "string",
+            "default": "null"
+          },
+          {
+            "doc": "Age",
+            "name": "age",
+            "type": "int",
+            "default": -1
+          }
+        ]
+      }
+    },
+    {
+      "doc": "Player two",
+      "name": "secondPlayer",
+      "type": "ru.leroymerlin.billing.Player"
+    },
+    {
+      "doc": "max game points",
+      "name": "point",
+      "type": {
+        "type": "string",
+        "java-class": "java.math.BigDecimal",
+        "default": "11"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+<Configuration status="WARN" xmlns="http://logging.apache.org/log4j/2.0/config">
+    <Appenders></Appenders>
+    <Loggers>
+        <Root level="error">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
